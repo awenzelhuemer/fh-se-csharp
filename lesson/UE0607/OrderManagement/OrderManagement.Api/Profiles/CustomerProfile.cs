@@ -10,6 +10,7 @@ namespace OrderManagement.Api.Profiles
         {
             CreateMap<Customer, CustomerDto>();
             CreateMap<CustomerForCreationDto, Customer>();
+            CreateMap<CustomerForUpdateDto, Customer>();
         }
     }
 }
