@@ -37,7 +37,7 @@ namespace Ado
             command.CommandText = sql;
 
             IList<T> items = new List<T>();
-            
+
             // read
             await using DbDataReader reader = await command.ExecuteReaderAsync();
             while (await reader.ReadAsync())
