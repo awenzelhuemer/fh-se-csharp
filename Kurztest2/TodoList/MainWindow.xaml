@@ -1,0 +1,55 @@
+﻿<Window x:Class="TodoList.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:TodoList.ViewModels" xmlns:converters="clr-namespace:TodoList.Converters"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="250">
+    <Window.Resources>
+
+        <Style x:Key="EntryDoneStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Done}" Value="True">
+                    <Setter Property="Background" Value="Green"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Add item" Click="Add" Margin="3"/>
+            <Button Content="Remove item" Click="Remove" Margin="3"
+                    Visibility="{Binding Path=SelectedItem,
+                            Converter={StaticResource NullToVisibilityConverter}}"/>
+            <Button Content="Select last" Click="SelectLast" Margin="3" />
+        </StackPanel>
+        <ListBox Grid.Row="1" ItemsSource="{Binding Path=Items}"
+                 SelectedItem="{Binding Path=SelectedItem}"
+                 ItemContainerStyle="{StaticResource EntryDoneStyle}">
+            
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding Path=Name}" Margin="3" />
+                        <TextBlock Grid.Column="1" Text="{Binding Path=DueDate, StringFormat='dd.MM.yyyy'}" Margin="3" />
+                        <CheckBox Grid.Column="2" HorizontalAlignment="Right" IsChecked="{Binding Path=Done}" Margin="3" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
