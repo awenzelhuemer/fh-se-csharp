@@ -1,0 +1,39 @@
+﻿<Window x:Class="StudentGrades.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        xmlns:viewmodels="clr-namespace:StudentGrades.ViewModels"
+        xmlns:converters="clr-namespace:StudentGrades.Converters"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+        Title="MainWindow" Height="450" Width="800"
+        SizeToContent="WidthAndHeight">
+    <Window.Resources>
+        <converters:GradeAverageToWidthConverter x:Key="GradeAverageToWidthConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Label Content="Jahrgang:" Margin="3"/>
+            <ComboBox ItemsSource="{Binding Path=MatriculationYears}"
+                      SelectedItem="{Binding Path=SelectedMatriculationYears}"
+                      Width="150" Margin="3"/>
+        </StackPanel>
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Path=Students}" BorderBrush="Black" Margin="3" BorderThickness="1">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Margin="3" Text="{Binding Path=Name}"/>
+                        <TextBlock Margin="3" Background="Orange"
+                                   Width="{Binding Path=GradeAverage, Converter={StaticResource GradeAverageToWidthConverter}, ConverterParameter=25}"/>
+                        <TextBlock Margin="3" Text="{Binding Path=GradeAverage}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Window>
