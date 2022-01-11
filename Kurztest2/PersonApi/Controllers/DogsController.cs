@@ -17,7 +17,8 @@ namespace PersonApi.Controllers
 
         private readonly IMapper mapper;
 
-        private static readonly ICollection<Dog> dogs = new List<Dog> {
+        private static readonly List<Dog> dogs = new()
+        {
             new() { Id = Guid.NewGuid(), Name = "Pepsi", Weight = 10 },
             new() { Id = Guid.NewGuid(), Name = "Chola", Weight = 4 }
         };
@@ -34,14 +35,13 @@ namespace PersonApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            var removed = dogs.Remove(dogs.FirstOrDefault(d => d.Id == id));
-            return removed ? NoContent() : NotFound();
+            return dogs.RemoveAll(d => d.Id == id) > 0 ? NoContent() : NotFound();
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(mapper.Map<IEnumerable<DogDto>>(dogs.ToList()));
+            return Ok(dogs.Select(d => mapper.Map<DogDto>(d)));
         }
 
         [HttpGet("{id}")]

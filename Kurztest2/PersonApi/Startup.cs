@@ -28,6 +28,7 @@ namespace PersonApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(DogMappingProfile));
+            services.AddHostedService<MyBackgroundService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
