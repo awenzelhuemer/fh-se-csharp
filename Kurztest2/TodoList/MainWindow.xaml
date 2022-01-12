@@ -35,7 +35,6 @@
         <ListBox Grid.Row="1" ItemsSource="{Binding Path=Items}"
                  SelectedItem="{Binding Path=SelectedItem}"
                  ItemContainerStyle="{StaticResource EntryDoneStyle}">
-            
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

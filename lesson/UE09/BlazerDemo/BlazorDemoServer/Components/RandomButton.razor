@@ -1,0 +1,22 @@
+﻿<span>
+    <button style="
+background-color: blue;
+color: white;
+padding: 5px 10px;
+border:none;" @onclick="HandleClick">
+        @randomValue
+    </button>
+</span>
+
+@code {
+    [Parameter]
+    public int Max { get; set; } = 100;
+
+    int randomValue = 0;
+    private Random random = new Random();
+
+    private void HandleClick()
+    {
+        randomValue = random.Next(1, Max);
+    }
+}
